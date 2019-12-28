@@ -1,16 +1,22 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
-import { Button } from "antd";
-import LoginComponent from "./components/login.comp";
+import Login from "./pages/loginPage/login";
+import { hot } from "react-hot-loader/root";
+
+import AccountReg from "./pages/accountRegPage/accountReg";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 function App() {
   return (
     <div className='App'>
-      {/* <Button type='primary'>Button</Button> */}
-      <LoginComponent />
+      <Router>
+        <Switch>
+          <Route path='/' exact component={Login}></Route>
+          <Route path='/accountReg' component={AccountReg}></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
 
-export default App;
+export default hot(App);

@@ -1,0 +1,9 @@
+.reg-card-style {
+  width: 850px;
+  max-width: 850px;
+  height: auto;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
