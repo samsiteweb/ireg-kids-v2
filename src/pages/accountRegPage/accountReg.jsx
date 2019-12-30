@@ -23,7 +23,7 @@ class AccountReg extends Component {
 
     console.log(this.props.location);
     console.log(this.props.history);
-    this.state = { current: 0 };
+    this.state = { current: 1 };
   }
 
   onChange = current => {
@@ -37,7 +37,6 @@ class AccountReg extends Component {
       <Container>
         <Card className='reg-card-style'>
           <CardHeader header='CREATE ACCOUNT' />
-
           <Steps
             type='navigation'
             size='small'

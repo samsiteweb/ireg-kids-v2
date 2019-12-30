@@ -1,18 +1,14 @@
-.container {
-  height: 80vh;
-  margin: auto;
+.cont {
+  height: 90vh;
   display: flex;
-  background-color: rgb(241, 239, 239);
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.Logo {
+  height: 10vh;
+  display: flex;
   justify-content: center;
   /* align-items: center; */
   text-align: center;
-}
-
-.Logo {
-  margin: 20;
-  display: flex;
-  background-color: rgb(241, 239, 239);
-  justify-content: center;
-  align-items: center;
-  height: 20vh;
 }

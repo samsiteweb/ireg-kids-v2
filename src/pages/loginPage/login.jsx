@@ -10,6 +10,9 @@ const SetIcon = ({ type, color }) => (
 class Login extends Component {
   state = {};
 
+  handleClick = () => {
+    this.props.history.push("/accountReg");
+  };
   render() {
     return (
       <Container>
@@ -52,11 +55,22 @@ class Login extends Component {
               backgroundColor: "#ccc"
             }}
           ></hr>
-          <Button type='ghost' style={{ marginRight: 10 }}>
+          <Button
+            type='ghost'
+            onClick={this.handleClick}
+            style={{ marginRight: 10 }}
+          >
             Create Account
           </Button>
-          <Button type='ghost'>Continue Registration</Button>
-          <Button type='link'>Forgot password</Button>
+          {/* <Button type='ghost' >Continue Registration</Button> */}
+          <Button
+            type='dashed'
+            onClick={() => {
+              this.props.history.push("/resetPassword");
+            }}
+          >
+            Forgot password
+          </Button>
         </Card>
       </Container>
     );

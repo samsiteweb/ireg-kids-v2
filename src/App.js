@@ -5,6 +5,7 @@ import { hot } from "react-hot-loader/root";
 
 import AccountReg from "./pages/accountRegPage/accountReg";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import PassReset from "./pages/passReset/passReset";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Switch>
           <Route path='/' exact component={Login}></Route>
           <Route path='/accountReg' component={AccountReg}></Route>
+          <Route path='/resetPassword' component={PassReset}></Route>
         </Switch>
       </Router>
     </div>
