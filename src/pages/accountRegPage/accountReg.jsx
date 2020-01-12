@@ -5,7 +5,12 @@ import "./accountReg.css";
 import CardHeader from "../../components/cardheader/cardheader";
 import AdminForm from "../../components/adminForm/adminform";
 import OrgForm from "../../components/orgForm/orgform";
-
+import { connect } from "react-redux";
+import {
+  setToOrg,
+  setToAdmin,
+  setStepStatus
+} from "../../redux/accountSetupReduxSaga/setup.actions";
 // const SetIcon = ({ type, color }) => (
 //   <Icon type={type} style={{ color: `${color}` }}></Icon>
 // );
@@ -23,16 +28,33 @@ class AccountReg extends Component {
 
     console.log(this.props.location);
     console.log(this.props.history);
-    this.state = { current: 1 };
+    this.state = { current: 0 };
   }
 
   onChange = current => {
+    const { setPageToOrg, setPageToAdmin } = this.props;
     console.log("onChange:", current);
-    this.setState({ current });
+    switch (current) {
+      case 0:
+        setPageToOrg();
+        break;
+      case 1:
+        setPageToAdmin();
+        break;
+      default:
+        setPageToOrg();
+        break;
+    }
   };
 
   render() {
-    const { current } = this.state;
+    const {
+      current,
+      hideOrgForm,
+      adminStepStatus,
+      orgStepStatus,
+      hideAdminForm
+    } = this.props;
     return (
       <Container>
         <Card className='reg-card-style'>
@@ -47,20 +69,47 @@ class AccountReg extends Component {
           >
             <Step
               title='Organisation Account'
-              status='process'
+              status={orgStepStatus}
               description='Create an organisation '
             />
             <Step
               title='Create Admin Account'
-              status='wait'
+              status={adminStepStatus}
               description='Create and Admin'
             />
           </Steps>
-          {current === 0 ? <OrgForm /> : <AdminForm />}
+          <div hidden={hideOrgForm}>
+            <OrgForm />
+          </div>
+          <div hidden={hideAdminForm}>
+            <AdminForm />
+          </div>
         </Card>
       </Container>
     );
   }
 }
 
-export default AccountReg;
+const mapStateToProps = ({
+  SetupReducers: {
+    current,
+    hideOrgForm,
+    hideAdminForm,
+    adminStepStatus,
+    orgStepStatus
+  }
+}) => ({
+  current: current,
+  hideOrgForm: hideOrgForm,
+  hideAdminForm: hideAdminForm,
+  adminStepStatus: adminStepStatus,
+  orgStepStatus: orgStepStatus
+});
+
+const mapDispatchToProps = dispatch => ({
+  setPageToOrg: () => dispatch(setToOrg()),
+  setPageToAdmin: () => dispatch(setToAdmin()),
+  setSteps: payload => dispatch(setStepStatus(payload))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AccountReg);

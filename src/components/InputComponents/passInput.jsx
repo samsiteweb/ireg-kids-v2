@@ -1,12 +1,12 @@
 import React from "react";
 import { Input, Form } from "antd";
 
-const PassInput = ({ state, getFieldDecorator }) => {
+const PassInput = ({ state, getFieldDecorator, setMargin = "-10px" }) => {
   return state.map((input, i) => {
     return (
       <Form.Item
         key={i}
-        style={{ marginBottom: "-10px" }}
+        style={{ marginBottom: setMargin }}
         label={input.label}
         hasFeedback
       >

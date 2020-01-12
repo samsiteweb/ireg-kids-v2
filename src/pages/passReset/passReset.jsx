@@ -2,8 +2,8 @@ import React, { Component, Fragment } from "react";
 import Container from "../../components/container/container.comp";
 import { Card, Form, Input, Button } from "antd";
 import CardHeader from "../../components/cardheader/cardheader";
-import PassInput from "../../components/passwordInput/passInput";
-import { passwordInput } from "../../components/adminForm/adminformData";
+import PassInput from "../../components/InputComponents/passInput";
+import { passwordInputData } from "../../components/InputComponents/passInputdata";
 
 class ResetPasswordForm extends Component {
   state = {
@@ -14,7 +14,7 @@ class ResetPasswordForm extends Component {
     formDescription: "Please input your credentials to reset your password."
   };
   componentDidMount() {
-    passwordInput(
+    passwordInputData(
       this.validateToNextPassword,
       this.compareToFirstPassword,
       this.handleConfirmBlur

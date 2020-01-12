@@ -51,32 +51,3 @@ export const formData = [
     validator: false
   }
 ];
-
-export const passwordInput = (method1, method2, method3) => {
-  return new Promise(resolve => {
-    resolve([
-      {
-        label: "Password",
-        fieldDecorator: "Password",
-        hasFeedback: true,
-        required: true,
-        asType: false,
-        typeMessage: false,
-        message: "Please input your password",
-        validator: method1,
-        blur: null
-      },
-      {
-        label: "Confirm Password",
-        fieldDecorator: "Confirm",
-        hasFeedback: true,
-        required: true,
-        asType: false,
-        typeMessage: false,
-        message: "Please confirm your password",
-        validator: method2,
-        blur: method3
-      }
-    ]);
-  });
-};

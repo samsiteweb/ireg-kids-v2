@@ -1,5 +1,6 @@
 import React from "react";
 import { Divider, Input, Icon, Tooltip, Button } from "antd";
+import { connect } from "react-redux";
 
 const VerifyAccountCode = ({ handleClick }) => {
   return (
@@ -43,4 +44,4 @@ const VerifyAccountCode = ({ handleClick }) => {
   );
 };
 
-export default VerifyAccountCode;
+export default connect()(VerifyAccountCode);

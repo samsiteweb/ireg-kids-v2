@@ -1,0 +1,108 @@
+.container {
+  height: inherit;
+  width: inherit;
+}
+.parent {
+  height: 200px;
+  width: 200px;
+}
+.upload {
+  position: relative;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+
+  border: 1px dotted #82a2fc;
+}
+.upload:hover {
+  border: 1px dotted #093ecf;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.25);
+}
+
+.CustomBtn {
+  color: white;
+  background-color: rgb(0, 128, 0);
+}
+
+.CustomBtn:hover {
+  color: white;
+  background-color: rgba(2, 121, 2, 0.575);
+  border-color: greenyellow;
+  transition: all 2s;
+}
+.CustomBtn:focus {
+  border-color: rgb(142, 231, 9);
+  color: white;
+  background-color: rgb(4, 153, 4);
+}
+.CustomBtn:after {
+  border-color: rgb(191, 231, 131);
+  color: white;
+  transition: all 2s;
+  background-color: rgb(107, 243, 107);
+}
+.upload input[type="file"] {
+  height: 100%;
+  width: 100%;
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.fade-in {
+  animation: fadeIn ease 1s;
+  -webkit-animation: fadeIn ease 1s;
+  -moz-animation: fadeIn ease 1s;
+  -o-animation: fadeIn ease 1s;
+  -ms-animation: fadeIn ease 1s;
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-moz-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-o-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@-ms-keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

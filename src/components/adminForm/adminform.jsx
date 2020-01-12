@@ -1,19 +1,9 @@
 import React, { Component, Fragment } from "react";
-import {
-  Form,
-  Input,
-  Select,
-  Button,
-  AutoComplete,
-  Divider,
-  Tooltip,
-  Icon
-} from "antd";
-import { passwordInput, formData } from "./adminformData";
-import PassInput from "../passwordInput/passInput";
+import { Form, Input, Button, Avatar } from "antd";
+import { formData } from "./adminformData";
+import { passwordInputData } from "../InputComponents/passInputdata";
+import PassInput from "../InputComponents/passInput";
 import VerifyAccountCode from "../verifyAccountCode/accountCode";
-const { Option } = Select;
-const AutoCompleteOption = AutoComplete.Option;
 
 class RegistrationForm extends Component {
   state = {
@@ -53,7 +43,7 @@ class RegistrationForm extends Component {
     callback();
   };
   componentDidMount() {
-    passwordInput(
+    passwordInputData(
       this.validateToNextPassword,
       this.compareToFirstPassword,
       this.handleConfirmBlur
@@ -96,6 +86,7 @@ class RegistrationForm extends Component {
             </div>
 
             <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+              <Avatar shape='square' size={64} icon='user' />
               {formData.map((data, i) => {
                 return (
                   <Form.Item key={i} label={data.label} hasFeedback>
