@@ -5,17 +5,30 @@ const initialState = {
   hideOrgForm: false,
   hideAdminForm: true,
   adminStepStatus: "wait",
-  orgStepStatus: "process"
+  orgStepStatus: "process",
+  destroyForm: false
 };
 
 const SetupReducers = (state = initialState, action) => {
-  switch (action.types) {
+  switch (action.type) {
+    case SetupActionTypes.DESTROYFORM:
+      return {
+        ...state,
+        destroyForm: true,
+        current: 1,
+        hideOrgForm: true,
+        hideAdminForm: false,
+        adminStepStatus: "process",
+        orgStepStatus: "wait"
+      };
     case SetupActionTypes.HIDE_ORG_FORM:
       return {
         ...state,
         current: 1,
         hideOrgForm: true,
-        hideAdminForm: false
+        hideAdminForm: false,
+        adminStepStatus: "process",
+        orgStepStatus: "wait"
       };
 
     case SetupActionTypes.HIDE_ADMIN_FORM:
@@ -23,7 +36,10 @@ const SetupReducers = (state = initialState, action) => {
         ...state,
         current: 0,
         hideOrgForm: false,
-        hideAdminForm: true
+        hideAdminForm: true,
+        adminStepStatus: "wait",
+        orgStepStatus: "process",
+        destroyForm: false
       };
     case SetupActionTypes.SET_STATUS:
       return {

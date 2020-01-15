@@ -18,11 +18,11 @@ export const GetImage = (IMAGE_TYPE, id) => {
 };
 
 export const RetriveDefaultImage = id => {
-  axios.get(`${IMAGE_URL}/Default/Logo/${id}`);
+  return `${IMAGE_URL}/Default/Logo/${id}`;
 };
 
 export const DeleteImage = (imgType, id) => {
-  axios.get(IMAGE_URL, {
+  axios.delete(IMAGE_URL, {
     params: {
       type: imgType,
       id: id

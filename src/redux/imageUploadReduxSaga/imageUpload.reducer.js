@@ -5,7 +5,9 @@ const Initial_State = {
   isUploading: false,
   uploadRes: "",
   loadImg: false,
-  isloading: false
+  isloading: false,
+  imgUrl: null,
+  imgUrlPreview: null
 };
 
 export const ImageUploadReducer = (state = Initial_State, action) => {
@@ -14,8 +16,11 @@ export const ImageUploadReducer = (state = Initial_State, action) => {
       return {
         ...state,
         imageData: action.payload,
-        isUploading: true
+        isUploading: true,
+        loadImg: false,
+        imgUrl: ""
       };
+
     case ImageActionTypes.UPLOAD_FAILED:
       return {
         ...state,
@@ -24,17 +29,33 @@ export const ImageUploadReducer = (state = Initial_State, action) => {
         loadImg: false
       };
 
+    case ImageActionTypes.UPDATE_URL:
+      return {
+        ...state,
+        imgUrlPreview: action.payload
+      };
+
     case ImageActionTypes.UPLOAD_FINISHED:
       return {
         ...state,
         uploadRes: action.payload,
         isUploading: false,
-        loadImg: true
+        loadImg: true,
+        imgUrl: "https://iregisterkids.com/prod_sup/api/Image/Default/Logo/"
+      };
+    case ImageActionTypes.LOAD_IMG:
+      return {
+        ...(state = Initial_State)
       };
     case ImageActionTypes.DELETE_IMAGE:
       return {
         ...state,
-        isloading: true
+        imageData: null,
+        isUploading: false,
+        uploadRes: "",
+        loadImg: false,
+        isloading: false,
+        imgUrl: null
       };
     case ImageActionTypes.DELETE_FAILED:
     case ImageActionTypes.DELETE_FINISHED:

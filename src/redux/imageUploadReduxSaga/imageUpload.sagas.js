@@ -1,4 +1,4 @@
-import { takeEvery, put, call, all } from "redux-saga/effects";
+import { takeEvery, takeLatest, put, call, all } from "redux-saga/effects";
 import ImgActionTypes from "./imgUpload.action.types";
 import {
   UploadImage,
@@ -8,8 +8,10 @@ import {
   uploadImageFinished,
   uploadImageFailed,
   deleteImageFinished,
-  deleteImageFailed
+  deleteImageFailed,
+  load_imageToggle
 } from "./imageUpload.actions";
+
 import {
   successMsg,
   errorMsg
@@ -33,28 +35,26 @@ function* uploadImageAsync({ payload: { data, imgType, id } }) {
 }
 
 export function* uploadImageSaga() {
-  yield takeEvery(ImgActionTypes.UPLOAD_START, uploadImageAsync);
+  yield takeLatest(ImgActionTypes.UPLOAD_START, uploadImageAsync);
 }
 
-function* deleteImageAsync({ payload: { imgType, id } }) {
+export function* deleteImageAsync({ payload: { imgType, id } }) {
   yield console.log(imgType, id, "i got delete data here ");
   try {
     const response = yield DeleteImage(imgType, id);
+
     yield put(deleteImageFinished(response));
-    yield call(successMsg, `${response.data.Message}`, 10);
+    // yield put(load_imageToggle());
+    yield call(successMsg, "deleted", 10);
   } catch (e) {
     yield put(deleteImageFailed(e));
-    yield call(
-      errorMsg,
-      `${e.response ? e.response.data.Message : intErr}`,
-      10
-    );
+    yield call(errorMsg, `${e ? "successful" : intErr}`, 10);
   }
 }
-export function* deleteImage() {
+export function* deleteImageSaga() {
   yield takeEvery(ImgActionTypes.DELETE_IMAGE, deleteImageAsync);
 }
 
 export default function* ImageUploadSagas() {
-  yield all([call(uploadImageSaga)]);
+  yield all([call(uploadImageSaga), call(deleteImageSaga)]);
 }

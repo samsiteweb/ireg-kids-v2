@@ -6,6 +6,7 @@ import CardHeader from "../../components/cardheader/cardheader";
 import AdminForm from "../../components/adminForm/adminform";
 import OrgForm from "../../components/orgForm/orgform";
 import { connect } from "react-redux";
+
 import {
   setToOrg,
   setToAdmin,
@@ -25,26 +26,15 @@ const stepStyle = {
 class AccountReg extends Component {
   constructor(props) {
     super(props);
-
     console.log(this.props.location);
     console.log(this.props.history);
-    this.state = { current: 0 };
   }
 
   onChange = current => {
     const { setPageToOrg, setPageToAdmin } = this.props;
     console.log("onChange:", current);
-    switch (current) {
-      case 0:
-        setPageToOrg();
-        break;
-      case 1:
-        setPageToAdmin();
-        break;
-      default:
-        setPageToOrg();
-        break;
-    }
+
+    current === 0 ? setPageToOrg() : setPageToAdmin();
   };
 
   render() {

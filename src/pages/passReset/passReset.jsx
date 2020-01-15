@@ -11,6 +11,7 @@ class ResetPasswordForm extends Component {
     input: null,
     buttonState: null,
     buttonText: "Send",
+
     formDescription: "Please input your credentials to reset your password."
   };
   componentDidMount() {
@@ -43,7 +44,7 @@ class ResetPasswordForm extends Component {
   };
   handleConfirmBlur = e => {
     const { value } = e.target;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+    // this.setState({ confirmDirty: this.state.confirmDirty || !!value });
   };
 
   compareToFirstPassword = (rule, value, callback) => {

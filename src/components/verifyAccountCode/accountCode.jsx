@@ -1,8 +1,17 @@
 import React from "react";
 import { Divider, Input, Icon, Tooltip, Button } from "antd";
 import { connect } from "react-redux";
+import { VerifyAccountStart } from "../../redux/verifyAccountReduxSaga/verifyAcc.actions";
 
-const VerifyAccountCode = ({ handleClick }) => {
+let accountCode = "";
+const handleClick = () => {};
+
+const handleChange = e => {
+  accountCode = e.target.value;
+  console.log(accountCode);
+};
+
+const VerifyAccountCode = ({ verifyCode, loadingStatus }) => {
   return (
     <div style={{ marginRight: "25%", marginLeft: "25%" }}>
       <div style={{ marginBottom: "20px" }}>
@@ -12,6 +21,7 @@ const VerifyAccountCode = ({ handleClick }) => {
         </span>
       </div>
       <Input
+        onChange={handleChange}
         style={{ textAlign: "center" }}
         size='large'
         placeholder='PLEASE ENTER ACCOUNT CODE'
@@ -33,8 +43,8 @@ const VerifyAccountCode = ({ handleClick }) => {
         <Button
           type='primary'
           size='large'
-          loading={false}
-          onClick={handleClick}
+          loading={loadingStatus}
+          onClick={() => verifyCode(accountCode)}
         >
           Verify
         </Button>
@@ -44,4 +54,12 @@ const VerifyAccountCode = ({ handleClick }) => {
   );
 };
 
-export default connect()(VerifyAccountCode);
+const mapStateToProps = ({ VerifyAccReducer: { isLoading } }) => ({
+  loadingStatus: isLoading
+});
+
+const mapDispatchToProps = dispatch => ({
+  verifyCode: code => dispatch(VerifyAccountStart(code))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(VerifyAccountCode);

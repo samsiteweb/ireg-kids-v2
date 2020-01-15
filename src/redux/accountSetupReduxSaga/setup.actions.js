@@ -10,3 +10,7 @@ export const setStepStatus = payload => ({
   type: SetupActionTypes.SET_STATUS,
   payload: payload
 });
+
+export const destroyForm = () => ({
+  type: SetupActionTypes.DESTROYFORM
+});

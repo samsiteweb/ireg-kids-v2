@@ -1,27 +1,29 @@
-export const passwordInputData = (...validationMethods) => {
+export const passwordInputData = (method1, method2, method3) => {
   return new Promise(resolve => {
     resolve([
       {
         label: "Password",
         fieldDecorator: "Password",
+        placeHolder: "Please input your password",
         hasFeedback: true,
         required: true,
         asType: false,
         typeMessage: false,
         message: "Please input your password",
-        validator: validationMethods.validator,
+        validator: method1,
         blur: null
       },
       {
-        label: "Confirm Password",
+        label: "confirm",
         fieldDecorator: "Confirm",
+        placeHolder: "Please confirm your password",
         hasFeedback: true,
         required: true,
         asType: false,
         typeMessage: false,
         message: "Please confirm your password",
-        validator: validationMethods.compare,
-        blur: validationMethods.blur
+        validator: method2,
+        blur: method3
       }
     ]);
   });

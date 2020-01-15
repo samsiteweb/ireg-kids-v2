@@ -10,7 +10,9 @@ const ImageUploader = ({
   loading,
   loadImg,
   height = 200,
-  width = 200
+  width = 200,
+  imageUrlPreview,
+  ...props
 }) => {
   return (
     <div style={{ height: `${height}px`, width: `${width}px` }}>
@@ -27,7 +29,15 @@ const ImageUploader = ({
           >
             <div style={{ textAlign: "center" }}>
               {loadImg ? (
-                <img src={imageUrl} alt='uploaded' height='200' width='200' />
+                <div>
+                  <img
+                    {...props}
+                    src={imageUrlPreview}
+                    alt='uploaded'
+                    height='200'
+                    width='200'
+                  />
+                </div>
               ) : (
                 <div>
                   <Icon

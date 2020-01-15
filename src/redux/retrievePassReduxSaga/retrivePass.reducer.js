@@ -25,7 +25,7 @@ const RetrivePasswordReducer = (state = initial_state, action) => {
       };
 
     default:
-      break;
+      return state;
   }
 };
 

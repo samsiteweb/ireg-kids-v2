@@ -5,6 +5,7 @@ import myFormSagas from "./orgRegReduxSaga/orgReg.sagas";
 import ImageUploadSagas from "./imageUploadReduxSaga/imageUpload.sagas";
 import verifyAccountSagas from "./verifyAccountReduxSaga/verifyAcc.sagas";
 import RetrivePassSagas from "./retrievePassReduxSaga/retrivePass.sagas";
+import { myAdminFormSagas } from "./adminRegReduxSaga/adminReg.sagas";
 
 export default function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export default function* rootSaga() {
     call(myFormSagas),
     call(ImageUploadSagas),
     call(verifyAccountSagas),
-    call(RetrivePassSagas)
+    call(RetrivePassSagas),
+    call(myAdminFormSagas)
   ]);
 }

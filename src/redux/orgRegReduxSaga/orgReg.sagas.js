@@ -28,7 +28,7 @@ function* submitFormDataAsync({ payload }) {
   try {
     const submitRes = yield SubmitNewRegistration_Api(payload);
     yield put(submitSuccess(submitRes.data.Result));
-    yield call(successMsg, `${submitRes.data.Message}`, 10);
+    // yield call(successMsg, `${submitRes.data.Message}`, 10);
   } catch (e) {
     yield put(submitFail(e));
     yield call(

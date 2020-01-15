@@ -20,7 +20,9 @@ const PassInput = ({ state, getFieldDecorator, setMargin = "-10px" }) => {
               validator: input.validator
             }
           ]
-        })(<Input.Password onBlur={input.blur} />)}
+        })(
+          <Input.Password placeholder={input.placeHolder} onBlur={input.blur} />
+        )}
       </Form.Item>
     );
   });

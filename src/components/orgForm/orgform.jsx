@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Form, Input, Button, Select, Col, Row, Icon } from "antd";
-import DragDrop from "../draganddrop/dragDrop";
+import { Form, Input, Button, Select, Col, Row, Icon, Divider } from "antd";
 
 import { connect } from "react-redux";
 
@@ -14,12 +13,13 @@ import {
   selectGet,
   submitStart
 } from "../../redux/orgRegReduxSaga/orgReg.actions";
-import ImageUpload from "../imgUpload/imgUploadold";
 import ImageUploader from "../imgUpload/imgUpload";
 import {
   uploadImageStart,
-  deleteImage
+  deleteImage,
+  updateUrl
 } from "../../redux/imageUploadReduxSaga/imageUpload.actions";
+import { destroyForm } from "../../redux/accountSetupReduxSaga/setup.actions";
 
 const { Option } = Select;
 
@@ -46,9 +46,9 @@ class OrgForms extends Component {
       (err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          // toggleImageUpload();
+          toggleImageUpload();
           submitFormData(values);
-          // this.props.RequestAccountCode(values);
+          this.props.RequestAccountCode(values);
         }
       }
     );
@@ -132,18 +132,31 @@ class OrgForms extends Component {
   };
 
   handleUpload = e => {
-    const { imageUploadAction, imgUploadId } = this.props;
-    console.log(e.target.files[0]);
-    const selectedImage = e.target.files[0];
-    const fd = new FormData();
-    fd.append("image", selectedImage, selectedImage.name);
-    imageUploadAction(fd, "Logo", imgUploadId);
+    const { imageUploadAction, imgUploadId, setImageUrl } = this.props;
+    try {
+      const selectedImage = e.target.files[0];
+      let reader = new FileReader();
+      reader.readAsDataURL(selectedImage);
+      reader.onloadend = () => {
+        setImageUrl(reader.result);
+      };
+      // console.log(e.target.files[0]);
+
+      const fd = new FormData();
+      fd.append("image", selectedImage, selectedImage.name);
+      imageUploadAction(fd, "Logo", imgUploadId);
+      e.target.value = "";
+    } catch (error) {
+      console.log(error);
+    }
+
+    //
   };
 
   acceptImg = () => {};
 
   deleteImg = () => {
-    const { imgUploadId } = this.props;
+    const { deleteImage, imgUploadId } = this.props;
     deleteImage("Logo", imgUploadId);
   };
 
@@ -169,13 +182,15 @@ class OrgForms extends Component {
       disableInput,
       isUploading,
       loadImg,
-      // disableSelect,
-      BtnText
+      BtnText,
+      imageUrlPreview,
+      destroyForm,
+      clearForm
     } = this.props;
     return (
       <div style={{ textAlign: "left" }}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          {uploadImg !== true && (
+          {destroyForm === false && uploadImg !== true && (
             <Fragment>
               <div style={{ marginTop: "-50px", textAlign: "center" }}>
                 <h5>
@@ -322,16 +337,36 @@ class OrgForms extends Component {
             </Fragment>
           )}
         </Form>
-        {uploadImg && (
-          <ImageUploader
-            imageUrl='https://iregisterkids.com/prod_sup/api/Image/Default/'
-            loadImg={loadImg}
-            loading={isUploading}
-            onChange={this.handleUpload}
-            acceptBtnClicked={this.acceptImg}
-            deleteBtnClicked={this.deleteImg}
-          />
-        )}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
+          }}
+        >
+          {uploadImg && (
+            <div>
+              <span style={{ fontSize: "1.0rem" }}>
+                <h3>Verify Account Code</h3>
+                <Divider dashed orientation='center'></Divider>
+              </span>
+              <ImageUploader
+                imageUrlPreview={imageUrlPreview}
+                loadImg={loadImg}
+                loading={isUploading}
+                onChange={this.handleUpload}
+                acceptBtnClicked={clearForm}
+                deleteBtnClicked={this.deleteImg}
+              />
+            </div>
+          )}
+        </div>
+        <div style={{ textAlign: "right" }}>
+          <Button type='link' onClick={clearForm}>
+            Skip
+            <Icon type='double-right' />
+          </Button>
+        </div>
       </div>
     );
   }
@@ -353,7 +388,8 @@ const mapStateToProps = ({
     },
     res
   },
-  ImageUploadReducer: { isUploading, loadImg }
+  SetupReducers: { destroyForm },
+  ImageUploadReducer: { isUploading, loadImg, imgUrl, imgUrlPreview }
 }) => ({
   isLoading: isLoading,
   confirmDirty: confirmDirty,
@@ -366,7 +402,9 @@ const mapStateToProps = ({
   BtnText: BtnText,
   isUploading: isUploading,
   loadImg: loadImg,
-  imgUploadId: res
+  imgUploadId: res,
+  imageUrlPreview: imgUrlPreview,
+  destroyForm: destroyForm
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -381,7 +419,9 @@ const mapDispatchToProps = dispatch => ({
   submitFormData: data => dispatch(submitStart({ data })),
   imageUploadAction: (data, imgType, id) =>
     dispatch(uploadImageStart({ data, imgType, id })),
-  deleteImage: (imgType, id) => dispatch(deleteImage({ imgType, id }))
+  deleteImage: (imgType, id) => dispatch(deleteImage({ imgType, id })),
+  setImageUrl: data => dispatch(updateUrl(data)),
+  clearForm: () => dispatch(destroyForm())
 });
 
 const OrgForm = Form.create({ name: "register" })(OrgForms);

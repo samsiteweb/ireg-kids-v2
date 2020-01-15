@@ -1,8 +1,10 @@
 import VerifyAccActionType from "./verifyAcc.actions.types";
 
 const initial_state = {
+  resDataInfo: null,
   response: null,
-  isloading: false
+  isLoading: false,
+  isValid: false
 };
 
 const VerifyAccReducer = (state = initial_state, action) => {
@@ -10,19 +12,21 @@ const VerifyAccReducer = (state = initial_state, action) => {
     case VerifyAccActionType.VERIFY_START:
       return {
         ...state,
-        isloading: true
+        isLoading: true
       };
     case VerifyAccActionType.VERIFY_FINISHED:
       return {
         ...state,
         response: action.payload,
-        isloading: false
+        isLoading: false,
+        isValid: true,
+        resDataInfo: action.payloadData
       };
     case VerifyAccActionType.VERIFY_FAILED:
       return {
         ...state,
         response: action.payload,
-        isloading: false
+        isLoading: false
       };
 
     default:
