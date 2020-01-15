@@ -124,8 +124,7 @@ class RegistrationForm extends Component {
       switchForm,
       modalVisible,
       isExitingRes,
-      switchModal,
-      submitExistingStart
+      switchModal
     } = this.props;
 
     const formItemLayout = {
@@ -169,7 +168,7 @@ class RegistrationForm extends Component {
                           marginRight: "10px",
                           marginBottom: "10px"
                         }}
-                        src='https://iregisterkids.com/prod_sup/api/Image/Default/Logo/d4271a55-b979-434f-9222-c948c0275395'
+                        src={`https://iregisterkids.com/prod_sup/api/Image/Default/Logo/${orgInfo.Id}`}
                         alt='Organisation Logo'
                         height='100'
                         width='130'
@@ -275,7 +274,14 @@ class RegistrationForm extends Component {
 
 const mapStateToProps = ({
   VerifyAccReducer: { isValid, response, resDataInfo },
-  AdminFormReducer: { isLoading, uploadImg, res, modalVisible, isExitingRes },
+  AdminFormReducer: {
+    isLoading,
+    uploadImg,
+    res: { UserId },
+    modalVisible,
+    isExitingRes,
+    formSubmittedSuccess
+  },
   ImageUploadReducer: { isUploading, loadImg, imgUrl, imgUrlPreview }
 }) => ({
   accountVerified: isValid,
@@ -285,7 +291,7 @@ const mapStateToProps = ({
   uploadImg: uploadImg,
   isUploading: isUploading,
   loadImg: loadImg,
-  imgUploadId: res,
+  imgUploadId: UserId,
   imageUrlPreview: imgUrlPreview,
   modalVisible: modalVisible,
   isExitingRes: isExitingRes

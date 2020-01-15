@@ -34,7 +34,16 @@ export const SubmitAdminRegistration = ({ formData: { token, values } }) => {
 };
 
 export const SubmitExistingAdminRegistration = ({ formData, id }) => {
-  const { FirstName, LastName, Email, Contact, Username, Password } = formData;
+  const {
+    FirstName,
+    LastName,
+    Email,
+    Contact,
+    Username,
+    Password
+  } = formData.ExistingformData;
+
+  const { Token, RefreshToken } = formData.getRes;
   console.log(
     FirstName,
     LastName,
@@ -44,25 +53,26 @@ export const SubmitExistingAdminRegistration = ({ formData, id }) => {
     Password,
     "formdata"
   );
+  console.log(formData.getRes);
   console.log(id);
 
-  // return axios.post(
-  //   REG_URL,
-  //   {
-  //     FirstName: FirstName,
-  //     LastName: LastName,
-  //     Email: Email,
-  //     Contact: Contact,
-  //     Username: Username,
-  //     Password: Password
-  //   },
-  //   {
-  //     params: {
-  //       id: id
-  //     },
-  //     headers: {
-  //       Authorization: `Bearer ${token.Token}`
-  //     }
-  //   }
-  // );
+  return axios.post(
+    REG_URL,
+    {
+      FirstName: FirstName,
+      LastName: LastName,
+      Email: Email,
+      Contact: Contact,
+      Username: Username,
+      Password: Password
+    },
+    {
+      params: {
+        id: id
+      },
+      headers: {
+        Authorization: `Bearer ${Token}`
+      }
+    }
+  );
 };

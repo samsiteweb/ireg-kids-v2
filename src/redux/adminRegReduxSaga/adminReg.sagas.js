@@ -22,12 +22,8 @@ function* submitAdminFormDataAsync({ payload }) {
       yield put(isExisting(submitRes.data));
       // yield call(successMsg, `${"is this you "}`, 10);
     } else {
-      yield put(submitSuccess(submitRes.data.Result));
-      yield call(
-        successMsg,
-        `${"Congratulations, you have successfull completed your account setup process. Please Proceed to login."}`,
-        10
-      );
+      yield put(submitSuccess(submitRes.data));
+      yield call(successMsg, `${"Form Submitted Successfully"}`, 10);
     }
   } catch (e) {
     yield put(submitFail(e));
@@ -50,8 +46,16 @@ export function* submitExisitingUserAsync({ payload }) {
   yield console.log(payload, "existing user data ");
   try {
     const submitRes = yield SubmitExistingAdminRegistration(payload);
-    yield put(submitSuccess(submitRes.data.Result));
-  } catch (error) {}
+    yield put(submitSuccess(submitRes.data));
+    yield call(successMsg, `${"Form Submitted Successfully"}`, 10);
+  } catch (e) {
+    yield put(submitFail(e));
+    yield call(
+      errorMsg,
+      `${e.response ? e.response.data.Message : intErr}`,
+      10
+    );
+  }
 }
 
 export function* submitExistingUser() {

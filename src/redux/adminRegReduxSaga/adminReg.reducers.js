@@ -6,7 +6,8 @@ const INITIAL_START = {
   confirmDirty: false,
   res: "",
   uploadImg: false,
-  modalVisible: false
+  modalVisible: false,
+  formSubmittedSuccess: false
 };
 
 const AdminFormReducer = (state = INITIAL_START, action) => {
@@ -21,13 +22,15 @@ const AdminFormReducer = (state = INITIAL_START, action) => {
         ...state,
         res: action.payload,
         isLoading: false,
-        uploadImg: true
+        uploadImg: true,
+        modalVisible: false
       };
     case AdminFormActionTypes.SUBMIT_FAIL:
       return {
         ...state,
         res: action.payload,
-        isLoading: false
+        isLoading: false,
+        modalVisible: false
       };
 
     case AdminFormActionTypes.ISEXISTING:
@@ -42,6 +45,7 @@ const AdminFormReducer = (state = INITIAL_START, action) => {
         ...state,
         modalVisible: false
       };
+
     default:
       return state;
   }

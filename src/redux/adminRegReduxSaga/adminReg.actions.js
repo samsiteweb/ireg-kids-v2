@@ -27,3 +27,7 @@ export const submitExistingStart = (formData, id) => ({
   payload: formData,
   id: id
 });
+
+export const submitExistingSuccess = () => ({
+  type: AdminFormActionTypes.SUBMIT_EXISTING_SUCCESS
+});
