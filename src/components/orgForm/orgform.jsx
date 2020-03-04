@@ -190,7 +190,7 @@ class OrgForms extends Component {
     return (
       <div style={{ textAlign: "left" }}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-          {destroyForm === false && uploadImg !== true && (
+          {destroyForm === false && (
             <Fragment>
               <div style={{ marginTop: "-50px", textAlign: "center" }}>
                 <h5>
@@ -275,6 +275,17 @@ class OrgForms extends Component {
                   />
                 )}
               </Form.Item>
+              <ImageUploader
+                imageUrlPreview={imageUrlPreview}
+                loadImg={true}
+                loading={isUploading}
+                onChange={this.handleUpload}
+                acceptBtnClicked={() => {
+                  clearForm();
+                  toggleImageUpload();
+                }}
+                deleteBtnClicked={this.deleteImg}
+              />
               {showCode && (
                 <Form.Item
                   label='Code'
@@ -337,7 +348,7 @@ class OrgForms extends Component {
             </Fragment>
           )}
         </Form>
-        <div
+        {/* <div
           style={{
             display: "flex",
             justifyContent: "center",
@@ -363,7 +374,7 @@ class OrgForms extends Component {
               />
             </div>
           )}
-        </div>
+        </div> */}
         <div style={{ textAlign: "right" }}>
           <Button
             type='link'

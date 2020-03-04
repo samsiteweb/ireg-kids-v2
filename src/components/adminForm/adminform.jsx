@@ -144,93 +144,87 @@ class RegistrationForm extends Component {
           {accountVerified === false ? (
             <VerifyAccountCode handleClick={this.handleAccountVerify} />
           ) : (
-            uploadImg === false && (
-              <div>
-                <div style={{ marginTop: "-50px" }}></div>
-                <Form {...formItemLayout} onSubmit={this.handleSubmit}>
-                  <div>
-                    <h5>
-                      <span style={{ color: "red" }}>*</span>Note that this
-                      Admin will create other admins in the future
-                    </h5>
+            <div>
+              <div style={{ marginTop: "-50px" }}></div>
+              <Form {...formItemLayout} onSubmit={this.handleSubmit}>
+                <div>
+                  <h5>
+                    <span style={{ color: "red" }}>*</span>Note that this Admin
+                    will create other admins in the future
+                  </h5>
+                  <div
+                    style={{
+                      display: "flex",
+                      flexWrap: "Wrap",
+                      flexDirection: "row",
+                      justifyContent: "center"
+                    }}
+                  >
+                    <img
+                      style={{
+                        border: "dotted 1px",
+                        marginRight: "10px",
+                        marginBottom: "10px"
+                      }}
+                      src={`https://iregisterkids.com/prod_sup/api/Image/Default/Logo/${orgInfo.Id}`}
+                      alt='Organisation Logo'
+                      height='100'
+                      width='130'
+                    />
                     <div
                       style={{
                         display: "flex",
-                        flexWrap: "Wrap",
-                        flexDirection: "row",
-                        justifyContent: "center"
+                        flexWrap: "wrap",
+
+                        textAlign: "left"
                       }}
                     >
-                      <img
-                        style={{
-                          border: "dotted 1px",
-                          marginRight: "10px",
-                          marginBottom: "10px"
-                        }}
-                        src={`https://iregisterkids.com/prod_sup/api/Image/Default/Logo/${orgInfo.Id}`}
-                        alt='Organisation Logo'
-                        height='100'
-                        width='130'
-                      />
-                      <div
-                        style={{
-                          display: "flex",
-                          flexWrap: "wrap",
-
-                          textAlign: "left"
-                        }}
-                      >
-                        <span>
-                          <b>Name: </b>
-                          {orgInfo.Name} <br></br>
-                          <b>Address: </b> {orgInfo.Address} <br></br>
-                          <b>Email: </b>
-                          {orgInfo.Email} <br></br>
-                          <b>Country: </b> {orgInfo.Country}
-                        </span>
-                      </div>
+                      <span>
+                        <b>Name: </b>
+                        {orgInfo.Name} <br></br>
+                        <b>Address: </b> {orgInfo.Address} <br></br>
+                        <b>Email: </b>
+                        {orgInfo.Email} <br></br>
+                        <b>Country: </b> {orgInfo.Country}
+                      </span>
                     </div>
                   </div>
+                </div>
 
-                  {formData.map((data, i) => {
-                    return (
-                      <Form.Item key={i} label={data.label} hasFeedback>
-                        {getFieldDecorator(data.fieldDecorator, {
-                          rules: [
-                            {
-                              type: data.asType,
-                              message: data.typeMessage
-                            },
-                            {
-                              required: data.required,
-                              message: data.message
-                            },
-                            {
-                              validator: data.validator
-                            }
-                          ]
-                        })(<Input />)}
-                      </Form.Item>
-                    );
-                  })}
-                  {this.state.input !== null && (
-                    <PassInput
-                      state={this.state.input}
-                      getFieldDecorator={getFieldDecorator}
-                    />
-                  )}
-                  <div style={{ marginTop: "20px" }}>
-                    <Button
-                      loading={isSubmited}
-                      type='primary'
-                      htmlType='submit'
-                    >
-                      Register
-                    </Button>
-                  </div>
-                </Form>
-              </div>
-            )
+                {formData.map((data, i) => {
+                  return (
+                    <Form.Item key={i} label={data.label} hasFeedback>
+                      {getFieldDecorator(data.fieldDecorator, {
+                        rules: [
+                          {
+                            type: data.asType,
+                            message: data.typeMessage
+                          },
+                          {
+                            required: data.required,
+                            message: data.message
+                          },
+                          {
+                            validator: data.validator
+                          }
+                        ]
+                      })(<Input />)}
+                    </Form.Item>
+                  );
+                })}
+                {this.state.input !== null && (
+                  <PassInput
+                    state={this.state.input}
+                    getFieldDecorator={getFieldDecorator}
+                  />
+                )}
+                <div style={{ marginTop: "20px" }}>
+                  <Button loading={isSubmited} type='primary' htmlType='submit'>
+                    Register
+                  </Button>
+                </div>
+              </Form>
+            </div>
           )}
           {/* <div
             style={{

@@ -9,8 +9,8 @@ const ImageUploader = ({
   deleteBtnClicked,
   loading,
   loadImg,
-  height = 200,
-  width = 200,
+  height = 100,
+  width = 100,
   imageUrlPreview,
   ...props
 }) => {
@@ -62,14 +62,14 @@ const ImageUploader = ({
           marginTop: "5px"
         }}
       >
-        <Button onClick={acceptBtnClicked} className='CustomBtn'>
+        {/* <Button onClick={acceptBtnClicked} className='CustomBtn'>
           Accept
           <Icon type={"check-circle"} />
         </Button>
         <Button onClick={deleteBtnClicked} type='danger'>
           Delete
           <Icon type={"delete"} />
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
