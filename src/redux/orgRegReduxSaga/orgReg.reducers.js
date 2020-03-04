@@ -114,7 +114,7 @@ const FormReducer = (state = INITIAL_START, action) => {
         ...state,
         AccountCode: {
           ...state.AccountCode,
-          disableInput: !state.AccountCode.disableInput,
+          disableInput: true,
           BtnText: "Get Code"
         }
       };

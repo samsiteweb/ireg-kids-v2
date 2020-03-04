@@ -67,7 +67,7 @@ const ImageUploader = ({
           <Icon type={"check-circle"} />
         </Button>
         <Button onClick={deleteBtnClicked} type='danger'>
-          delete
+          Delete
           <Icon type={"delete"} />
         </Button>
       </div>

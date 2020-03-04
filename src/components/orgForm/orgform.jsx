@@ -17,7 +17,8 @@ import ImageUploader from "../imgUpload/imgUpload";
 import {
   uploadImageStart,
   deleteImage,
-  updateUrl
+  updateUrl,
+  load_imageToggle
 } from "../../redux/imageUploadReduxSaga/imageUpload.actions";
 import { destroyForm } from "../../redux/accountSetupReduxSaga/setup.actions";
 
@@ -48,7 +49,7 @@ class OrgForms extends Component {
           console.log("Received values of form: ", values);
           toggleImageUpload();
           submitFormData(values);
-          this.props.RequestAccountCode(values);
+          // this.props.RequestAccountCode(values);
         }
       }
     );
@@ -149,8 +150,6 @@ class OrgForms extends Component {
     } catch (error) {
       console.log(error);
     }
-
-    //
   };
 
   acceptImg = () => {};
@@ -185,7 +184,8 @@ class OrgForms extends Component {
       BtnText,
       imageUrlPreview,
       destroyForm,
-      clearForm
+      clearForm,
+      toggleImageUpload
     } = this.props;
     return (
       <div style={{ textAlign: "left" }}>
@@ -344,10 +344,10 @@ class OrgForms extends Component {
             alignItems: "center"
           }}
         >
-          {uploadImg && (
+          {uploadImg === true && (
             <div>
               <span style={{ fontSize: "1.0rem" }}>
-                <h3>Verify Account Code</h3>
+                <h3>Upload Company Logo</h3>
                 <Divider dashed orientation='center'></Divider>
               </span>
               <ImageUploader
@@ -355,14 +355,23 @@ class OrgForms extends Component {
                 loadImg={loadImg}
                 loading={isUploading}
                 onChange={this.handleUpload}
-                acceptBtnClicked={clearForm}
+                acceptBtnClicked={() => {
+                  clearForm();
+                  toggleImageUpload();
+                }}
                 deleteBtnClicked={this.deleteImg}
               />
             </div>
           )}
         </div>
         <div style={{ textAlign: "right" }}>
-          <Button type='link' onClick={clearForm}>
+          <Button
+            type='link'
+            onClick={() => {
+              clearForm();
+              toggleImageUpload();
+            }}
+          >
             Skip
             <Icon type='double-right' />
           </Button>

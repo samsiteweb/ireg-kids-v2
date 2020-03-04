@@ -147,7 +147,6 @@ class RegistrationForm extends Component {
             uploadImg === false && (
               <div>
                 <div style={{ marginTop: "-50px" }}></div>
-
                 <Form {...formItemLayout} onSubmit={this.handleSubmit}>
                   <div>
                     <h5>
@@ -233,14 +232,14 @@ class RegistrationForm extends Component {
               </div>
             )
           )}
-          <div
+          {/* <div
             style={{
               display: "flex",
               justifyContent: "center",
               alignItems: "center"
             }}
           >
-            {uploadImg && (
+            {uploadImg === true && (
               <ImageUploader
                 imageUrlPreview={imageUrlPreview}
                 loadImg={loadImg}
@@ -250,13 +249,13 @@ class RegistrationForm extends Component {
                 deleteBtnClicked={this.deleteImg}
               />
             )}
-          </div>
-          <div style={{ textAlign: "left" }}>
+          </div> */}
+          {/* <div style={{ textAlign: "left" }}>
             <Button type='link' onClick={switchForm}>
               <Icon type='double-left' />
               Back
             </Button>
-          </div>
+          </div> */}
         </div>
         {modalVisible && (
           <ConfirmModal

@@ -41,11 +41,8 @@ export const ImageUploadReducer = (state = Initial_State, action) => {
         uploadRes: action.payload,
         isUploading: false,
         loadImg: true,
+
         imgUrl: "https://iregisterkids.com/prod_sup/api/Image/Default/Logo/"
-      };
-    case ImageActionTypes.LOAD_IMG:
-      return {
-        ...(state = Initial_State)
       };
     case ImageActionTypes.DELETE_IMAGE:
       return {
@@ -63,6 +60,17 @@ export const ImageUploadReducer = (state = Initial_State, action) => {
         ...state,
         isloading: false,
         uploadRes: action.payload
+      };
+
+    case ImageActionTypes.LOAD_IMG:
+      return {
+        imageData: null,
+        isUploading: false,
+        uploadRes: "",
+        loadImg: false,
+        isloading: false,
+        imgUrl: null,
+        imgUrlPreview: null
       };
 
     default:
