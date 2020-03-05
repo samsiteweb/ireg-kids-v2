@@ -21,13 +21,31 @@ import {
   successMsg,
   errorMsg
 } from "../../components/messageComponent/message";
+import {
+  uploadImageStart,
+  updateUrl
+} from "../imageUploadReduxSaga/imageUpload.actions";
+import {
+  setToAdmin,
+  destroyForm
+} from "../accountSetupReduxSaga/setup.actions";
 
 const intErr = "Please Check your Internet Connection";
-function* submitFormDataAsync({ payload }) {
-  yield console.log(payload, "i got the form datas in my saga");
+function* submitFormDataAsync({ payload: { data, imageData } }) {
+  yield console.log(data, "i got the form datas in my saga");
+  yield console.log(imageData, "image data in saga");
+
   try {
-    const submitRes = yield SubmitNewRegistration_Api(payload);
+    const submitRes = yield SubmitNewRegistration_Api(data);
+    yield console.log(submitRes, "Submittion responses");
     yield put(submitSuccess(submitRes.data.Result));
+    const fd = yield new FormData();
+    yield fd.append("image", imageData, imageData.name);
+    yield put(
+      uploadImageStart({ data: fd, imgType: "Logo", id: submitRes.data.Result })
+    );
+    yield put(destroyForm());
+    yield put(updateUrl(null));
     // yield call(successMsg, `${submitRes.data.Message}`, 10);
   } catch (e) {
     yield put(submitFail(e));

@@ -17,6 +17,7 @@ const ImageUploader = ({
   return (
     <div style={{ height: `${height}px`, width: `${width}px` }}>
       <div className='container'>
+        <h4 style={{ textAlign: "center" }}>{props.header}</h4>
         <div className='upload'>
           <div
             style={{
@@ -34,8 +35,8 @@ const ImageUploader = ({
                     {...props}
                     src={imageUrlPreview}
                     alt='uploaded'
-                    height='200'
-                    width='200'
+                    height={height}
+                    width={height}
                   />
                 </div>
               ) : (

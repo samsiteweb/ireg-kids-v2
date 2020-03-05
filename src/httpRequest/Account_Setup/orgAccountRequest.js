@@ -22,12 +22,14 @@ export const RequestCustomCode_Api = payload =>
     }
   });
 
-export const SubmitNewRegistration_Api = payload =>
-  axios.post(NEW_REG_URL, {
-    AccountCode: payload.data.Code,
-    Name: payload.data.Name,
-    Email: payload.data.Email,
-    Contact: payload.data.Contact,
-    Address: payload.data.Address,
-    Country: payload.data.Country
+export const SubmitNewRegistration_Api = payload => {
+  console.log(payload, "payload in api calls");
+  return axios.post(NEW_REG_URL, {
+    AccountCode: payload.Code,
+    Name: payload.Name,
+    Email: payload.Email,
+    Contact: payload.Contact,
+    Address: payload.Address,
+    Country: payload.Country
   });
+};

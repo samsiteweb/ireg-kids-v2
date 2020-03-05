@@ -25,6 +25,11 @@ import { destroyForm } from "../../redux/accountSetupReduxSaga/setup.actions";
 const { Option } = Select;
 
 class OrgForms extends Component {
+  state = {
+    imgSelected: false,
+    selectedImage: null,
+    showUpload: false
+  };
   validateContact = (rule, value, callback) => {
     // console.log(value.length, "useDebugValue(value)");
 
@@ -40,15 +45,14 @@ class OrgForms extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    const { toggleImageUpload, submitFormData } = this.props;
+    const { submitFormData } = this.props;
 
     this.props.form.validateFieldsAndScroll(
       ["Code", "Email", "Address", "Contact", "Name", "Country"],
       (err, values) => {
         if (!err) {
           console.log("Received values of form: ", values);
-          toggleImageUpload();
-          submitFormData(values);
+          submitFormData(values, this.state.selectedImage);
           // this.props.RequestAccountCode(values);
         }
       }
@@ -116,6 +120,9 @@ class OrgForms extends Component {
         }
       });
     }
+    if (isFieldsTouched(["Country"])) {
+      this.setState({ showUpload: true });
+    }
   };
 
   handleSelectionChange = selected => {
@@ -136,6 +143,7 @@ class OrgForms extends Component {
     const { imageUploadAction, imgUploadId, setImageUrl } = this.props;
     try {
       const selectedImage = e.target.files[0];
+
       let reader = new FileReader();
       reader.readAsDataURL(selectedImage);
       reader.onloadend = () => {
@@ -145,7 +153,12 @@ class OrgForms extends Component {
 
       const fd = new FormData();
       fd.append("image", selectedImage, selectedImage.name);
-      imageUploadAction(fd, "Logo", imgUploadId);
+      this.setState({
+        selectedImage: selectedImage,
+        imgSelected: true
+      });
+
+      // imageUploadAction(fd, "Logo", imgUploadId);
       e.target.value = "";
     } catch (error) {
       console.log(error);
@@ -177,6 +190,7 @@ class OrgForms extends Component {
       uploadImg,
       showCode,
       isLoading,
+      setImageUrl,
       accountLoading,
       disableInput,
       isUploading,
@@ -187,6 +201,7 @@ class OrgForms extends Component {
       clearForm,
       toggleImageUpload
     } = this.props;
+    const { showUpload } = this.state;
     return (
       <div style={{ textAlign: "left" }}>
         <Form {...formItemLayout} onSubmit={this.handleSubmit}>
@@ -275,17 +290,25 @@ class OrgForms extends Component {
                   />
                 )}
               </Form.Item>
-              <ImageUploader
-                imageUrlPreview={imageUrlPreview}
-                loadImg={true}
-                loading={isUploading}
-                onChange={this.handleUpload}
-                acceptBtnClicked={() => {
-                  clearForm();
-                  toggleImageUpload();
-                }}
-                deleteBtnClicked={this.deleteImg}
-              />
+              {showUpload && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "0px",
+                    marginBottom: "70px"
+                  }}
+                >
+                  <ImageUploader
+                    header={"Company Logo"}
+                    imageUrlPreview={imageUrlPreview}
+                    loadImg={imageUrlPreview && this.state.imgSelected}
+                    loading={isUploading}
+                    onChange={this.handleUpload}
+                  />
+                </div>
+              )}
+
               {showCode && (
                 <Form.Item
                   label='Code'
@@ -380,7 +403,7 @@ class OrgForms extends Component {
             type='link'
             onClick={() => {
               clearForm();
-              toggleImageUpload();
+              setImageUrl(null);
             }}
           >
             Skip
@@ -436,7 +459,8 @@ const mapDispatchToProps = dispatch => ({
   verifyAccountCode: data => dispatch(verifyAccountStart({ data })),
   confirmCustomAccountCode: data =>
     dispatch(confirmCustomAccountCode({ data })),
-  submitFormData: data => dispatch(submitStart({ data })),
+  submitFormData: (data, imageData) =>
+    dispatch(submitStart({ data, imageData })),
   imageUploadAction: (data, imgType, id) =>
     dispatch(uploadImageStart({ data, imgType, id })),
   deleteImage: (imgType, id) => dispatch(deleteImage({ imgType, id })),

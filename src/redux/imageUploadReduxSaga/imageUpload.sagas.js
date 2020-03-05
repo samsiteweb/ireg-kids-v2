@@ -17,9 +17,9 @@ import {
   errorMsg
 } from "../../components/messageComponent/message";
 
-const intErr = "Please Check your Internet Connection";
+const intErr = "An error occured during upload ...";
 function* uploadImageAsync({ payload: { data, imgType, id } }) {
-  yield console.log(data, imgType, id, "i got the image here");
+  yield console.log(data, id, imgType, "i got the image here");
   try {
     const uploadRes = yield UploadImage(data, imgType, id);
     yield put(uploadImageFinished(uploadRes));
